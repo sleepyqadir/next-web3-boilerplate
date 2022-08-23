@@ -1,66 +1,69 @@
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import Link from "next/link";
-import Account from "../components/Account";
-import ETHBalance from "../components/ETHBalance";
-import TokenBalance from "../components/TokenBalance";
-import useEagerConnect from "../hooks/useEagerConnect";
-
-const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
-
+import { Box, Container, Heading, Text, Button, Stack } from '@chakra-ui/react'
+import Head from 'next/head'
+import Nav from '../components/Nav'
 function Home() {
-  const { account, library } = useWeb3React();
-
-  const triedToEagerConnect = useEagerConnect();
-
-  const isConnected = typeof account === "string" && !!library;
-
   return (
-    <div>
+    <Container
+      style={{
+        height: '100vh',
+        backgroundPosition: 'center',
+        marginTop: '20px',
+      }}
+      maxW="1200px"
+    >
       <Head>
         <title>next-web3-boilerplate</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <nav>
-          <Link href="/">
-            <a>next-web3-boilerplate</a>
-          </Link>
-
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      </header>
+      <Nav />
 
       <main>
-        <h1>
-          Welcome to{" "}
-          <a href="https://github.com/mirshko/next-web3-boilerplate">
-            next-web3-boilerplate
-          </a>
-        </h1>
-
-        {isConnected && (
-          <section>
-            <ETHBalance />
-
-            <TokenBalance tokenAddress={DAI_TOKEN_ADDRESS} symbol="DAI" />
-          </section>
-        )}
+        <Container maxW={'3xl'}>
+          <Stack
+            as={Box}
+            textAlign={'center'}
+            spacing={{ base: 8, md: 14 }}
+            py={{ base: 20, md: 36 }}
+          >
+            <Heading
+              fontWeight={600}
+              fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
+              lineHeight={'110%'}
+            >
+              Get started with <br />
+              <Text as={'span'} color={'#F9C65D'}>
+                next react boileplate
+              </Text>
+            </Heading>
+            <Text color={'white.800'}>
+              The ultimate boileplate with no of functionality and chakra ui
+              enabled in it
+            </Text>
+            <Stack
+              direction={'column'}
+              spacing={3}
+              align={'center'}
+              alignSelf={'center'}
+              position={'relative'}
+            >
+              <Button
+                colorScheme={'orange'}
+                bg={'#F9C65D'}
+                rounded={'full'}
+                px={6}
+                _hover={{
+                  bg: '#F9A35D',
+                }}
+              >
+                Github Url
+              </Button>
+            </Stack>
+          </Stack>
+        </Container>
       </main>
-
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-        }
-      `}</style>
-    </div>
-  );
+    </Container>
+  )
 }
 
-export default Home;
+export default Home
